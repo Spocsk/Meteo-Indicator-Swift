@@ -29,20 +29,42 @@
 		1AEA2F252E6C461D008CD44E /* Meteo-IndicatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meteo-IndicatorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		1A79D1982E734A040008F326 /* Exceptions for "Meteo-Indicator" folder in "Meteo-Indicator" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Tests/Meteo-IndicatorTests/Meteo_IndicatorTests.swift",
+				"Tests/Meteo-IndicatorUITests/Meteo_IndicatorUITests.swift",
+				"Tests/Meteo-IndicatorUITests/Meteo_IndicatorUITestsLaunchTests.swift",
+			);
+			target = 1AEA2F0D2E6C461C008CD44E /* Meteo-Indicator */;
+		};
+		1A79D1992E734A040008F326 /* Exceptions for "Meteo-Indicator" folder in "Meteo-IndicatorTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Tests/Meteo-IndicatorTests/Meteo_IndicatorTests.swift",
+			);
+			target = 1AEA2F1A2E6C461D008CD44E /* Meteo-IndicatorTests */;
+		};
+		1A79D19A2E734A040008F326 /* Exceptions for "Meteo-Indicator" folder in "Meteo-IndicatorUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Tests/Meteo-IndicatorUITests/Meteo_IndicatorUITests.swift",
+				"Tests/Meteo-IndicatorUITests/Meteo_IndicatorUITestsLaunchTests.swift",
+			);
+			target = 1AEA2F242E6C461D008CD44E /* Meteo-IndicatorUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		1AEA2F102E6C461C008CD44E /* Meteo-Indicator */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				1A79D1982E734A040008F326 /* Exceptions for "Meteo-Indicator" folder in "Meteo-Indicator" target */,
+				1A79D1992E734A040008F326 /* Exceptions for "Meteo-Indicator" folder in "Meteo-IndicatorTests" target */,
+				1A79D19A2E734A040008F326 /* Exceptions for "Meteo-Indicator" folder in "Meteo-IndicatorUITests" target */,
+			);
 			path = "Meteo-Indicator";
-			sourceTree = "<group>";
-		};
-		1AEA2F1E2E6C461D008CD44E /* Meteo-IndicatorTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Meteo-IndicatorTests";
-			sourceTree = "<group>";
-		};
-		1AEA2F282E6C461D008CD44E /* Meteo-IndicatorUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Meteo-IndicatorUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -76,8 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				1AEA2F102E6C461C008CD44E /* Meteo-Indicator */,
-				1AEA2F1E2E6C461D008CD44E /* Meteo-IndicatorTests */,
-				1AEA2F282E6C461D008CD44E /* Meteo-IndicatorUITests */,
 				1AEA2F0F2E6C461C008CD44E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,9 +150,6 @@
 			dependencies = (
 				1AEA2F1D2E6C461D008CD44E /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				1AEA2F1E2E6C461D008CD44E /* Meteo-IndicatorTests */,
-			);
 			name = "Meteo-IndicatorTests";
 			packageProductDependencies = (
 			);
@@ -152,9 +169,6 @@
 			);
 			dependencies = (
 				1AEA2F272E6C461D008CD44E /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				1AEA2F282E6C461D008CD44E /* Meteo-IndicatorUITests */,
 			);
 			name = "Meteo-IndicatorUITests";
 			packageProductDependencies = (
