@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1ACB9E222E7357EB0055399F /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 1ACB9E212E7357E10055399F /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1AEA2F1C2E6C461D008CD44E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1ACB9E212E7357E10055399F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = README.md; sourceTree = "<group>"; };
 		1AEA2F0E2E6C461C008CD44E /* Meteo-Indicator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Meteo-Indicator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AEA2F1B2E6C461D008CD44E /* Meteo-IndicatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meteo-IndicatorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AEA2F252E6C461D008CD44E /* Meteo-IndicatorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meteo-IndicatorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +102,7 @@
 		1AEA2F052E6C461C008CD44E = {
 			isa = PBXGroup;
 			children = (
+				1ACB9E212E7357E10055399F /* README.md */,
 				1AEA2F102E6C461C008CD44E /* Meteo-Indicator */,
 				1AEA2F0F2E6C461C008CD44E /* Products */,
 			);
@@ -250,6 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1ACB9E222E7357EB0055399F /* README.md in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
