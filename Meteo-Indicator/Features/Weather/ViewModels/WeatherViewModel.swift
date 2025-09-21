@@ -5,8 +5,8 @@
 //  Created by Dylan COUTO DE OLIVEIRA on 11/09/2025.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 @MainActor
 final class WeatherViewModel: ObservableObject {
@@ -14,15 +14,16 @@ final class WeatherViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     private let httpClient: HTTPClient
+    private let weatherBaseUrl: String =
+        "https://api.open-meteo.com/v1/forecast?latitude=48.84&longitude=1.55&hourly=temperature_2m"
 
-    // Valeur par défaut pour éviter d'avoir à injecter le client à l'usage courant
-    init(httpClient: HTTPClient = URLSessionHTTPClient()) {
-        self.httpClient = httpClient
+    init(httpClient: HTTPClient? = nil) {
+        self.httpClient = httpClient ?? URLSessionHTTPClient()
     }
 
-    /// Récupère la météo et met à jour l'état observable
-    func refresh() async {
-        guard let url = URL(string: "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m") else {
+    /// Get weather data from specific location
+    private func getWeatherData() async {
+        guard let url = URL(string: weatherBaseUrl) else {
             self.weather = nil
             self.errorMessage = "URL invalide"
             return
@@ -33,7 +34,44 @@ final class WeatherViewModel: ObservableObject {
             self.errorMessage = nil
         } catch {
             self.weather = nil
-            self.errorMessage = "Échec du chargement: \(error.localizedDescription)"
+            self.errorMessage =
+                "Échec du chargement: \(error.localizedDescription)"
         }
+    }
+    
+    private func roundDateTimeMinuteToZero(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        // Format type : 2025-09-20T12:00
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+        let formattedDateString: String = dateFormatter.string(from: date)
+        let dateStringWithoutMinutes: String = formattedDateString.components(separatedBy: ":")[0]
+        return dateStringWithoutMinutes + ":00"
+    }
+    
+    private func roundDateToHour(_ date: Date) -> Date {
+        Calendar.current.date(bySetting: .minute, value: 0, of: date) ?? date
+    }
+
+    func getWeatherWithCurrentDateTime() async -> String {
+        await getWeatherData()
+        let dateFormatter = DateFormatter()
+        // Format type : 2025-09-20T12:00
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+
+        let today = Date()
+        let currentDateTime: Date = roundDateToHour(today)
+        let currentDateFormattedWithoutMinutes: String = roundDateTimeMinuteToZero(currentDateTime)
+
+        if let hourly = weather?.hourly, !hourly.time.isEmpty {
+            for (index, time) in hourly.time.enumerated() {
+                if currentDateFormattedWithoutMinutes == time {
+                    if let temperature = weather?.hourly.temperature2m[index] {
+                        return "Temp : \(temperature)°C"
+                    }
+                    return "Data found at \(time)"
+                }
+            }
+        }
+        return "No data"
     }
 }

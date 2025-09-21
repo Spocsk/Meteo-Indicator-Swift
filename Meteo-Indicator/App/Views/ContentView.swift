@@ -9,21 +9,20 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @StateObject var viewModel = WeatherViewModel()
-
-    init(viewModel: WeatherViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
+    @StateObject private var weatherViewModel = WeatherViewModel()
+    @State private var weatherText: String = ""
 
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text(weatherText)
+        }
+        .task {
+            weatherText = await weatherViewModel.getWeatherWithCurrentDateTime()
         }
         .padding()
     }
 }
 
-
+#Preview {
+    ContentView()
+}
