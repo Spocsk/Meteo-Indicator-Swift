@@ -7,12 +7,10 @@
 
 import Foundation
 
-// 1. Le protocole définit l’interface
 protocol HTTPClient {
     func get<T: Decodable>(url: URL) async throws -> T
 }
 
-// 2. Implémentation concrète basée sur URLSession
 struct URLSessionHTTPClient: HTTPClient {
     func get<T: Decodable>(url: URL) async throws -> T {
         let (data, response) = try await URLSession.shared.data(from: url)
