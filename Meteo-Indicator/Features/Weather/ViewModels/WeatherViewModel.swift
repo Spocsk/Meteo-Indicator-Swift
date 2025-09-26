@@ -43,6 +43,7 @@ final class WeatherViewModel: ObservableObject {
         let dateFormatter = DateFormatter()
         // Format type : 2025-09-20T12:00
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+        dateFormatter.locale = Locale(identifier: "fr")
         let formattedDateString: String = dateFormatter.string(from: date)
         let dateStringWithoutMinutes: String = formattedDateString.components(separatedBy: ":")[0]
         return dateStringWithoutMinutes + ":00"
@@ -55,6 +56,7 @@ final class WeatherViewModel: ObservableObject {
     func getWeatherWithCurrentDateTime() async -> String {
         await getWeatherData()
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "fr")
         // Format type : 2025-09-20T12:00
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
 
@@ -66,12 +68,16 @@ final class WeatherViewModel: ObservableObject {
             for (index, time) in hourly.time.enumerated() {
                 if currentDateFormattedWithoutMinutes == time {
                     if let temperature = weather?.hourly.temperature2m[index] {
-                        return "Temp : \(temperature)°C"
+                        return "Temp : \(formatTemperature(temperature))"
                     }
                     return "Data found at \(time)"
                 }
             }
         }
         return "No data"
+    }
+    
+    private func formatTemperature(_ temperature: Double) -> String {
+        String(format: "%.0f", round(temperature)) + "°C"
     }
 }
