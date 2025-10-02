@@ -6,12 +6,13 @@
 //
 
 import Combine
-import Foundation
 import CoreLocation
+import Foundation
 
 @MainActor
 final class WeatherViewModel: ObservableObject {
     @Published var weather: WeatherResponse?
+    @Published var weatherCode: Int?
     @Published var errorMessage: String?
 
     private let httpClient: HTTPClient
@@ -71,33 +72,30 @@ final class WeatherViewModel: ObservableObject {
     }
 
     func getWeatherWithCurrentDateTime() async -> String {
-        
+
         await locationManager.getCurrentLocation()
-        // Assure que nous avons une coordonnée valide
+
         guard let coords = locationManager.currentLocation else {
             return "Pas de localisation disponible"
         }
 
-        // Charge la météo pour la position actuelle
         await getWeatherData(
             latitude: coords.latitude,
             longitude: coords.longitude
         )
 
-        // Clé temporelle arrondie à l'heure (ex: 2025-09-20T12:00)
         let currentDateTime = roundDateToHour(Date())
         let currentKey = roundDateTimeMinuteToZero(currentDateTime)
 
-        // Vérifie que les données horaires existent
         guard let hourly = weather?.hourly, !hourly.time.isEmpty else {
             return "No data"
         }
 
-        // Recherche l'index correspondant à l'heure courante
         for (index, time) in hourly.time.enumerated() {
             if time == currentKey {
                 if index < hourly.temperature2m.count {
                     if let temperature = hourly.temperature2m[index] {
+                        self.weatherCode = hourly.weatherCode[index]
                         return formatTemperature(temperature)
                     } else {
                         return "No data"

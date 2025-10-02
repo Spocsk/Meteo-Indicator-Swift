@@ -14,12 +14,23 @@ struct ContentView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var weatherText: String = ""
 
+    var weatherTemperaturePredictionViewModel =
+        WeatherTemperaturePredictionViewModel()
+
     var body: some View {
         VStack {
+            WeatherTemperaturePrediction(
+                weatherConditionImage:
+                    weatherTemperaturePredictionViewModel
+                    .getWeatherImageFromWeatherCode(
+                        weatherViewModel.weatherCode ?? 0
+                    )
+            )
             Text(weatherText)
-            if let coords = locationManager.currentLocation {
-                Text("lat: \(coords.latitude), long: \(coords.longitude)")
-            }
+                .offset(y: -50)
+                .bold()
+                .shadow(radius: 10)
+                .fontWidth(.init(10))
         }
         .task {
             weatherText = await weatherViewModel.getWeatherWithCurrentDateTime()
