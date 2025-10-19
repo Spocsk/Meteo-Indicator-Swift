@@ -18,7 +18,8 @@ struct WeatherResponse: Codable {
     let elevation: Double
     let hourlyUnits: HourlyUnits
     let hourly: Hourly
-    
+    let current: Current
+
     enum CodingKeys: String, CodingKey {
         case latitude
         case longitude
@@ -29,6 +30,19 @@ struct WeatherResponse: Codable {
         case elevation
         case hourlyUnits = "hourly_units"
         case hourly
+        case current
+    }
+}
+
+struct Current: Codable {
+    let time: String
+    let interval: Int
+    let temperature2m: Double
+
+    enum CodingKeys: String, CodingKey {
+        case time
+        case interval
+        case temperature2m = "temperature_2m"
     }
 }
 
@@ -37,7 +51,7 @@ struct HourlyUnits: Codable {
     let time: String
     let temperature2m: String
     let weatherCode: String
-    
+
     enum CodingKeys: String, CodingKey {
         case time
         case temperature2m = "temperature_2m"
@@ -48,9 +62,9 @@ struct HourlyUnits: Codable {
 // MARK: - Hourly Data
 struct Hourly: Codable {
     let time: [String]
-    let temperature2m: [Double?]   // nullable car tu as des "null" dans ton JSON
+    let temperature2m: [Double?]
     let weatherCode: [Int]
-    
+
     enum CodingKeys: String, CodingKey {
         case time
         case temperature2m = "temperature_2m"

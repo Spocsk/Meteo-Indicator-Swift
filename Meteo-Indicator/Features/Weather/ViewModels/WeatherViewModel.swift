@@ -39,6 +39,7 @@ final class WeatherViewModel: ObservableObject {
             self.weather = nil
             self.errorMessage =
                 "Échec du chargement: \(error.localizedDescription)"
+            print("Erorr \(String(describing: error))")
         }
     }
 
@@ -50,7 +51,11 @@ final class WeatherViewModel: ObservableObject {
         components.queryItems = [
             URLQueryItem(name: "latitude", value: "\(latitude)"),
             URLQueryItem(name: "longitude", value: "\(longitude)"),
-            URLQueryItem(name: "hourly", value: "temperature_2m"),
+            URLQueryItem(name: "hourly", value: "temperature_2m,weather_code"),
+            URLQueryItem(name: "forecast_days", value: "1"),
+            URLQueryItem(name: "timezone", value: "Europe/Paris"),
+            URLQueryItem(name: "current", value: "temperature_2m"),
+            URLQueryItem(name: "models", value: "meteofrance_seamless"),
         ]
         return components.url
     }
@@ -69,6 +74,30 @@ final class WeatherViewModel: ObservableObject {
 
     private func roundDateToHour(_ date: Date) -> Date {
         Calendar.current.date(bySetting: .minute, value: 0, of: date) ?? date
+    }
+
+    func getCurrentWeather() async -> Double {
+
+        await locationManager.getCurrentLocation()
+
+        guard let coords = locationManager.currentLocation else {
+            return 0
+        }
+
+        await getWeatherData(
+            latitude: coords.latitude,
+            longitude: coords.longitude
+        )
+
+        print(
+            "Weather: \(String(describing: self.weather?.current.temperature2m))"
+        )
+
+        guard let temperature = self.weather?.current.temperature2m else {
+            return 0
+        }
+
+        return temperature
     }
 
     func getWeatherWithCurrentDateTime() async -> String {
